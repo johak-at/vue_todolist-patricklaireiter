@@ -4,6 +4,7 @@ import { computed } from "vue";
 const list = ref([]);
 const newItem = ref("");
 const filter = ref("");
+
 const filteredList = computed(() => {
     let result = [];
     for (let i = 0; i < list.value.length; i++) {
@@ -17,8 +18,8 @@ function add() {
     list.value.push(newItem.value);
     newItem.value = "";
 }
-function remove(index) {
-    list.value.splice(index, 1);
+function remove(item) {
+    list.value.splice(list.value.indexOf(item), 1);
 }
 </script>
 <template>
@@ -27,10 +28,11 @@ function remove(index) {
         <input @keyup.enter="add" v-model="newItem" />
         <br /><br />
         <input type="text" placeholder="filter list" v-model="filter" />
+        
         <ul>
             <li v-for="(item, index) in filteredList" :key="item">
                 {{index}} - {{item}}
-                <button @click="remove(index)">x</button>
+                <button @click="remove(item)">x</button>
             </li>
         </ul>
     </div>
